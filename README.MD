@@ -21,16 +21,13 @@
 
 ## APIs Used
 
-### 1. **Canvas API (Mandatory)**:
-   - Visual representation of language learning exercises such as flashcards, sentence-building, and drag-and-drop interactions.
-
-### 2. **Speech API**:
+### 1. **Speech API**:
    - Voice input and recognition for pronunciation practice and feedback.
 
-### 3. **Audio API** (Complementary to Speech API):
+### 2. **Audio API** (Complementary to Speech API):
    - Used for listening exercises, including playback of words or sentences for pronunciation checks and listening comprehension.
 
-### 4. **Drag & Drop API**:
+### 3. **Drag & Drop API**:
    - Adds interactive elements for users to drag words or translations into place to complete exercises.
 
 ## Project Structure
