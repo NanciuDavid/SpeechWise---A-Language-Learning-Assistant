@@ -40,7 +40,6 @@
 
 ### JavaScript
 - The JavaScript logic is contained within a single `.js` file, which includes:
-  - Canvas rendering for flashcards, word matching, and sentence building.
   - Speech recognition using the Web Speech API.
   - Audio feedback and playback using the Audio API.
   - Drag-and-drop functionality for exercises involving word arrangement.

@@ -1,0 +1,293 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Helvetica', sans-serif;
+    perspective: 1000px;
+}
+
+body, html {
+    height: 100%; /* Ensures full height */
+    font-size: 16px;
+}
+
+/* Container Styles */
+.container {
+    margin: 0 auto;
+    padding: 10px;
+}
+
+/* Navbar Styles */
+nav {
+    padding: 20px 0;
+    border-bottom: 2px solid #ddd;
+    transition: background-color 0.3s ease;
+    background-color: #ffffff; /* White */
+}
+
+.navbar-brand {
+    color: #d6350e;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 24px;
+    transition: color 0.3s ease;
+}
+
+.navbar-brand:hover {
+    color: #b52b0a;
+}
+
+.btn-primary {
+    float: right;
+    background-color: #b52b0a;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: transparent;
+    opacity: 0.8;
+    color: #d6350e;
+    border: 1px solid #d6350e;
+}
+
+nav > a {
+    margin-left: 10px;
+    font-size: 18px;
+    font-weight: 600;
+    margin-right: 10px;
+}
+
+nav > a:hover {
+    color: #d6350e;
+    text-decoration: none;
+}
+
+/* Header Styles */
+h1, h2 {
+    color: black;
+}
+
+h1 {
+    font-size: 48px;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    padding: 20px; /* Added padding for better spacing */
+}
+
+h1 span {
+    color: #d6350e;
+    text-shadow: 1px 1px 1px #b52b0a;
+}
+
+h2 {
+    font-size: 32px; /* Increased font size for headers */
+    font-weight: 700; /* Bold for emphasis */
+    color: black;/* Header color */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Subtle shadow for pop */
+    margin-bottom: 10px; /* Reduced space below header */
+}
+
+/* Icon Styles */
+i {
+    color: #d6350e;
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+    text-align: center;
+    line-height: 50px;
+    font-size: 30px;
+}
+
+/* Feature Icons and Showcase Section Styles */
+.feature-icons {
+    padding: 60px 0;
+    height: auto; /* Allow sections to take up full height */
+    background-color: #f7f9fa; /* Very Light Gray */
+    animation: slideInUp 0.5s ease forwards;
+}
+
+.showcase {
+    text-align: center; /* Center aligns the text */
+    background-color: #f0f8ff; /* Alice Blue */
+    padding: 60px 0;
+}
+
+.showcase-row {
+    justify-content: space-between; /* Distribute columns evenly */
+    margin: 0; /* Remove outer margins */
+    padding: 20px 0; /* Adjust top and bottom padding for breathing space */
+    border: 1px solid #ddd; /* Light border */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    transition: transform 0.3s ease; /* Smooth transition for hover effect */
+    height: 40rem; /* Fixed height for the row */
+    display: flex; /* Use flexbox to align items */
+    flex-direction: row; /* Arrange children in a row */
+    align-items: center; /* Center align items vertically */
+    padding-left: 0; /* Ensure left padding is zero */
+    padding-right: 0; /* Ensure right padding is zero */
+    overflow: hidden; /* Prevent overflow of content */
+}
+
+
+
+.showcase-img {
+    flex: 1; /* Allow image to grow and fill space */
+    display: flex; /* Use flexbox for the image container */
+    justify-content: center; /* Center the image horizontally */
+    align-items: center; /* Center the image vertically */
+    padding: 0; /* Ensure no padding */
+    height: 100%; /* Ensure it takes full height of the row */
+}
+
+.showcase-img img {
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    object-fit: contain; /* Maintain aspect ratio within the container */
+    margin: 0; /* Remove margin to ensure the image touches the edge */
+}
+
+.showcase h2 {
+    color: var(--primary-color);
+    font-size: 36px; /* Larger size for better emphasis */
+    font-weight: 700;
+}
+
+.showcase p {
+    color: #333; /* Darker text for better readability */
+    font-size: 18px; /* Increase font size */
+}
+
+/* Additional Media Queries for Responsiveness */
+/* Additional Media Queries for Responsiveness */
+@media (min-width: 769px) {
+    .showcase .showcase-row {
+        justify-content: space-between; /* Distribute columns evenly */
+    margin: 0; /* Remove outer margins */
+    padding: 20px 0; /* Adjust top and bottom padding for breathing space */
+    border: 1px solid #ddd; /* Light border */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    transition: transform 0.3s ease; /* Smooth transition for hover effect */
+    height: 40rem; /* Fixed height for the row */
+    display: flex; /* Use flexbox to align items */
+    flex-direction: row; /* Arrange children in a row */
+    align-items: center; /* Center align items vertically */
+    padding-left: 0; /* Ensure left padding is zero */
+    padding-right: 0; /* Ensure right padding is zero */
+    overflow: hidden; /* Prevent overflow of content */
+    }
+
+    .showcase-text {
+        flex: 1; /* Allow text to grow and fill space */
+        text-align: center; /* Center the text */
+        margin: 0; /* Remove margin */
+    }
+
+    .showcase-img {
+        flex: 1; /* Allow image to grow and fill space */
+        display: flex; /* Use flexbox for the image container */
+        justify-content: center; /* Center the image horizontally */
+        padding: 0; /* Ensure no padding */
+    }
+
+    .showcase-img img {
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        object-fit: contain; /* Maintain aspect ratio within the container */
+        margin: 0; /* Remove margin to ensure the image touches the edge */
+    }
+
+    /* Adjust other elements as needed */
+    h1 {
+        font-size: 48px; /* Larger header size */
+    }
+
+    h2 {
+        font-size: 32px; /* Larger subheader size */
+    }
+
+    .btn-primary {
+        padding: 10px 20px; /* Maintain button padding */
+    }
+
+    nav > a {
+        font-size: 18px; /* Navbar link size */
+    }
+}
+
+@media (max-width: 768px) {
+    .showcase .showcase-row {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        max-width: 100%; /* Ensure images take full width on small screens */
+    }
+    .showcase-img img {
+        width: 75%;
+        height: auto;
+        align-items: center;
+        margin: 0 auto;
+        max-height: 100%;
+    }
+    .showcase p {
+        font-size: smaller;
+        max-height: 100%;
+    }
+
+    .navbar-brand {
+        font-size: 20px; /* Adjust navbar brand size */
+    }
+
+    .btn-primary {
+        padding: 8px 15px; /* Adjust button padding */
+    }
+
+    nav > a {
+        font-size: 16px; /* Adjust navbar link size */
+    }
+
+    h1 {
+        font-size: 24px; /* Adjust header size */
+    }
+
+    h2 {
+        font-size: 18px; /* Adjust h2 size */
+    }
+}
+
+
+/* Animation Keyframes */
+@keyframes slideInUp {
+    0% {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px); /* Adjust this value for the up movement */
+    }
+}
+
+@keyframes pop {
+    0%, 100% {
+        transform: translateZ(0);
+    }
+    50% {
+        transform: translateZ(15px); /* Adjust to control "pop" depth */
+    }
+}
