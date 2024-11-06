@@ -25,10 +25,10 @@ body {
     box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
     padding: 1rem 0;
     display: flex;
-  flex-wrap: inherit;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 5rem;
+    flex-wrap: inherit;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 5rem;
 }
 
 .navbar-brand {
@@ -113,3 +113,55 @@ h1{
     transform: translateY(-2px);
 }
 
+
+
+/* Footer Styles */
+.footer {
+    background: var(--text-dark);
+    color: white;
+    padding: 4rem 0 2rem;
+}
+
+.footer-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.footer-text {
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 2rem;
+}
+
+.social-links {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: flex-end;
+}
+
+.social-link {
+    color: white;
+    font-size: 1.5rem;
+    transition: all 0.3s ease;
+    width: 45px;
+    height: 45px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.social-link:hover {
+    color: var(--primary);
+    background: white;
+    transform: translateY(-3px);
+}
+
+.footer-bottom {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+    color: rgba(255, 255, 255, 0.6);
+}

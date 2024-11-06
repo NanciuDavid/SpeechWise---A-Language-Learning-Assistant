@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Nanciu David">
+    <meta name="description" content="SpeechWise - Your language learning assistant">
+    <meta property="og:title" content="SpeechWise - Your language learning assistant">
+    <meta property="og:description" content="Improve your pronunciation with your favorite language learning assistant">
+    <meta property="og:image" content="./png/logo-color.png">
+    <meta property="og:locale" content="en_GB" />
+    <meta property="og:type" content="website" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+    <link rel="icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/styles/english-ex.css">
+    <title>Practice Your English Pronunciation</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light" id ="nav-ph">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="bi bi-soundwave me-2"></i>
+                SpeechWise
+            </a>
+            <button class="btn-primary nav-btn" href="#contact">Get Started</button>
+        </div>
+    </nav>
+
+    <a href="index.html">
+        <button type="submit" class="back-btn">
+            Back
+        </button>
+        </a>
+
+
+    <header class="text-center">
+        <div class="container">
+            <h1 class="display-5">Select a Difficulty Level to Start!</h1>
+        </div>
+    </header>
+
+
+    <section>
+        <div class="container py-5">
+            <div class="row align-items-center">
+                <div class="col-lg-6 text-center mb-4 mb-lg-0">
+                    <img src="/logo/idea.png" alt="Idea" class="img-fluid rounded-lg">
+                </div>
+                <div class="col-lg-6 text-center">
+                    <label for="select-level" class="form-label h4">Choose Level:</label>
+                    <select name="levels" id="select-level" class="form-select mb-3">
+                        <option selected value = "default">---Select one of the levels below---</option>
+                        <option value="Beginner">Beginner</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Advanced">Advanced</option>
+                    </select>
+                    <button type="submit" class="btn btn-primary btn-lg" id="submit-button">Start</button>
+                </div>
+            </div>
+        </div>
+    
+    </section>
+   
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/scripts/english-ex.js"></script>
+</body>
+</html>
