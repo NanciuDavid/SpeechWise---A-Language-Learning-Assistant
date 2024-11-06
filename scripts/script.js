@@ -1,6 +1,5 @@
 // storing the metadata for the language learning assistant
-
-const sentences = [
+const englishSentences = [
     {
       text: "The quick brown fox jumps over the lazy dog.",
       level: "Beginner",
@@ -62,7 +61,9 @@ button.style.display = "none";
 dropdown.addEventListener("change", () => {
     if (dropdown.value !== "default") {
         // Show the button
-        button.style.display = "block";
+        button.style.display = "flex";
+        //add transition for smoother appearance
+        
     } else {
         button.style.display = "none";
     }
