@@ -13,11 +13,10 @@
     --text-light: #636e72;
 }
 
-
-
 body {
     color: var(--text-dark);
     line-height: 1.6;
+    padding: 0 1rem;
 }
 
 /* Navbar Styles */
@@ -27,10 +26,9 @@ body {
     box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
     padding: 1rem 0;
     display: flex;
-  flex-wrap: inherit;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 4rem;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 4rem;
 }
 
 .navbar-brand {
@@ -60,24 +58,23 @@ body {
     transform: translateY(-2px);
 }
 
-
-h1{
+h1 {
     font-size: large;
     text-align: center;
     margin-bottom: 5rem;
 }
 
-
-.row{
+.row {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     margin: 0 auto;
     height: fit-content;
+    flex-wrap: wrap;
 }
 
-#select-level{
+#select-level {
     margin: 1rem 0;
     padding: 0.5rem 1rem;
     border: 1px solid var(--text-light);
@@ -116,15 +113,12 @@ h1{
     transform: translateY(-2px);
 }
 
-
-header h1{
+header h1 {
     font-size: 2.5rem;
     font-weight: 700;
     margin: 0.8rem 0;
     text-align: center;
-
 }
-
 
 .gradient-text {
     background: linear-gradient(45deg, var(--primary), var(--primary-dark));
@@ -134,7 +128,6 @@ header h1{
     font-weight: 800;
 }
 
-
 #submit-button {
     display: flex;
     justify-content: center;
@@ -142,4 +135,88 @@ header h1{
     margin: 0 auto;
 }
 
+/* Media Queries */
+@media (max-width: 1200px) {
+    h1 {
+        font-size: 1.8rem;
+        margin-bottom: 3rem;
+    }
+    
+    .navbar-brand {
+        font-size: 1.3rem;
+    }
+}
 
+@media (max-width: 992px) {
+    .navbar {
+        flex-direction: column;
+        text-align: center;
+        padding: 1rem 0;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    .row {
+        flex-direction: column;
+    }
+
+    #select-level {
+        font-size: 0.9rem;
+    }
+    
+    .btn-primary, .btn-outline-primary {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 1.3rem;
+        margin-bottom: 2rem;
+    }
+
+    .navbar-brand {
+        font-size: 1.1rem;
+    }
+
+    #select-level {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+    }
+    
+    .btn-primary, .btn-outline-primary {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar {
+        padding: 0.8rem 0;
+    }
+
+    h1 {
+        font-size: 1.1rem;
+    }
+
+    .navbar-brand {
+        font-size: 1rem;
+    }
+
+    .row {
+        padding: 0.5rem;
+    }
+
+    #select-level {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.7rem;
+    }
+
+    .btn-primary, .btn-outline-primary {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.7rem;
+    }
+}
