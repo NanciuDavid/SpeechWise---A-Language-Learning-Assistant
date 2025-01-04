@@ -157,152 +157,298 @@ const sentences = {
         ]
     }
 };
+
+
+const button = document.getElementById('submit-button');
+const recordButton = document.getElementById('record-button');
+const dropdown = document.getElementById('select-level');
+const header = document.getElementById('header-text');
+const initialRow = document.getElementById('initial-row');
+const afterRow = document.getElementById('after-row');
+const sentenceDisplay = document.getElementById('sentence-display');
+const defaultPhoto = document.getElementById('default-photo');
+
+
+afterRow.style.display = 'none';
+
+
 const languageCodes = {
-    romanian: "ro-RO",
-    english: "en-US",
-    italian: "it-IT",
-    french: "fr-FR",
-    german: "de-DE",
-    portuguese: "pt-PT"
+    english: 'en-US',
+    french: 'fr-FR',
+    german: 'de-DE',
+    italian: 'it-IT',
+    portuguese: 'pt-PT',
+    romanian: 'ro-RO'
 };
 
-// Elements
-const dropdown = document.getElementById("select-level");
-const button = document.getElementById("submit-button");
-const initialRow = document.getElementById("initial-row");
-const afterRow = document.getElementById("after-row");
-const header = document.getElementById("header-text");
-const sentenceDisplay = document.getElementById("sentence-display");
-const recordButton = document.getElementById("record-button");
-const defaultPhoto = document.getElementById("default-photo");
 
-// Hide initial elements
-button.style.display = "none";
-afterRow.style.display = "none";
-
-// Show button when a level is selected
-dropdown.addEventListener("change", () => {
-    button.style.display = dropdown.value !== "default" ? "flex" : "none";
-});
-
-// Extract language from URL
 const pageUrl = window.location.href;
-const language = pageUrl.match(/pages\/(\w+)-ex/)[1];
-console.log(language);
+const languageMatch = pageUrl.match(/pages\/(\w+)-ex/);
+const language = languageMatch ? languageMatch[1] : 'english';
+
+
+let recognition = null;
+
+
+const recordButtonParent = recordButton.parentElement;
+const canvas = document.createElement('canvas');
+const ctx = canvas.getContext('2d');
+
+
+canvas.width = Math.min(recordButtonParent.offsetWidth * 0.9, 500);
+canvas.height = 100;
+canvas.style.cssText = `
+    display: block;
+    margin: 20px auto;
+    width: 90%;
+    max-width: 500px;
+    height: 100px;
+    border-radius: 10px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    background-color: rgb(247, 249, 250);
+`;
+
+// Insert canvas after the record button
+recordButton.insertAdjacentElement('afterend', canvas);
+
+// Audio visualization variables
+let audioContext;
+let analyser;
+let dataArray;
+let animationId;
+
+// Initialize audio visualization
+function initializeAudioVisualization() {
+    console.log('🎵 Initializing audio visualization...');
+    audioContext = new AudioContext();
+    analyser = audioContext.createAnalyser();
+    analyser.fftSize = 256;
+    const bufferLength = analyser.frequencyBinCount;
+    dataArray = new Uint8Array(bufferLength);
+    console.log('✅ Audio visualization ready');
+}
+
+// Draw visualization
+function drawVisualization() {
+    animationId = requestAnimationFrame(drawVisualization);
+    analyser.getByteFrequencyData(dataArray);
+    
+    // Clear canvas with visible background
+    ctx.fillStyle = 'rgb(247, 249, 250)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    // Adjust bar width and spacing
+    const barSpacing = 2;
+    const barWidth = (canvas.width / dataArray.length) * 2;
+    let x = canvas.width * 0.05; // Start from 5% of canvas width
+    
+    for(let i = 0; i < dataArray.length; i++) {
+        // Make bars taller and more responsive
+        const barHeight = (dataArray[i] / 255) * canvas.height * 0.8;
+        
+        // Create gradient
+        const gradient = ctx.createLinearGradient(0, canvas.height, 0, canvas.height - barHeight);
+        gradient.addColorStop(0, '#ff4b1f');  // Brighter orange-red
+        gradient.addColorStop(1, '#ff9068');  // Lighter orange
+        
+        ctx.fillStyle = gradient;
+        
+        // Round the top of bars
+        ctx.beginPath();
+        ctx.roundRect(x, canvas.height - barHeight, barWidth, barHeight, 5);
+        ctx.fill();
+        
+        x += barWidth + barSpacing;
+    }
+}
+
+// Add these at the top with other constants
+const correctSound = new Audio('/audio/duolingo-correct.mp3');
+const wrongSound = new Audio('/audio/duolingo-wrong.mp3');
+
+async function setStatus(result, normalizedSentence, sentence) {
+    try {
+        // Simple string comparison after normalization
+        if (result === normalizedSentence) {
+            console.log('✅ Correct pronunciation!');
+            
+            // Play success sound
+            try {
+                await correctSound.play();
+            } catch (error) {
+                console.error('Error playing success sound:', error);
+            }
+            
+            // Update UI for success
+            defaultPhoto.src = "/logo/happy.png";
+            recognitionComplete = true;
+            displaySentence(sentence, true);
+            
+            // Wait for animation and sound, then show new sentence
+            setTimeout(() => {
+                displayNewSentence();
+                defaultPhoto.src = "/logo/record-default.png";
+                recognitionComplete = false;
+            }, 2000);
+            
+        } else {
+            console.log('❌ Incorrect pronunciation');
+            
+            // Play error sound
+            try {
+                await wrongSound.play();
+            } catch (error) {
+                console.error('Error playing error sound:', error);
+            }
+            
+            // Update UI for failure
+            defaultPhoto.src = "/logo/sad.png";
+            recognitionComplete = false;
+            displaySentence(sentence, false, result);
+            
+            // Reset to default photo after delay
+            setTimeout(() => {
+                defaultPhoto.src = "/logo/record-default.png";
+            }, 1500);
+        }
+    } catch (error) {
+        console.error('Error in setStatus:', error);
+        recognitionComplete = false;
+        recordButton.disabled = false;
+    }
+}
+
+// Display sentence with color coding
+function displaySentence(sentence, isCorrect, result = "") {
+    sentenceDisplay.innerHTML = "";
+    const sentenceWords = sentence.split(" ");
+    const resultWords = result ? result.split(" ") : [];
+
+    sentenceWords.forEach((word, index) => {
+        const wordSpan = document.createElement("span");
+        wordSpan.innerHTML = `${word} `;
+        
+        if (isCorrect) {
+            wordSpan.style.color = "green";
+        } else {
+            const resultWord = resultWords[index] || "";
+            wordSpan.style.color = word.toLowerCase() === resultWord.toLowerCase() ? "green" : "red";
+        }
+        
+        sentenceDisplay.appendChild(wordSpan);
+    });
+}
+
+// Generate random sentence
+function generateRandomSentence(language, level) {
+    const randomVal = Math.floor(Math.random() * sentences[language][level].length);
+    return sentences[language][level][randomVal];
+}
+
+// Display new sentence
+function displayNewSentence() {
+    const level = dropdown.value.toLowerCase();
+    const newSentence = generateRandomSentence(language, level);
+    sentenceDisplay.innerHTML = newSentence;
+}
 
 // Event listener for submit button
 button.addEventListener("click", () => {
+    if (dropdown.value === 'default') {
+        alert('Please select a difficulty level first!');
+        return;
+    }
+
     header.innerHTML = `Start recording your voice and practice your <span class="gradient-text">${language}</span> pronunciation!`;
-    header.style.font = "1.5rem";
     initialRow.style.display = "none";
     afterRow.style.display = "flex";
 
-    const level = dropdown.value.toLowerCase();
-    const randomVal = Math.floor(Math.random() * sentences[language][level].length);
-    const sentence = sentences[language][level][randomVal];
-    sentenceDisplay.innerHTML = sentence;
+    displayNewSentence();
 
-    // Initialize Speech Recognition API
+    // Initialize Speech Recognition
     window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!window.SpeechRecognition) {
         alert("Speech recognition is not supported in this browser.");
         return;
     }
 
-    const recognition = new window.SpeechRecognition();
+    recognition = new window.SpeechRecognition();
     recognition.lang = languageCodes[language];
     recognition.continuous = false;
     recognition.interimResults = false;
-    recognition.maxAlternatives = 1;
-
-    // Start speech recognition on record button click
-    recordButton.addEventListener("click", () => {
-        recognition.start();
-    });
-
-    recognition.onresult = (event) => {
-        const result = event.results[0][0].transcript.toLowerCase();
-        const normalizedSentence = sentence.toLowerCase().replace(/[.?,\/#!$%\^&\*;:{}=\-_`~()]/g, "").replace(/\s{2,}/g, " ");
-
-        console.log("Expected:", normalizedSentence);
-        console.log("Recognized:", result);
-
-        if (result === normalizedSentence) {
-            const audioContext = new AudioContext();
-
-            // adding audio/duolingo-correct.mp3 to audio context using audio API
-
-            fetch("/audio/duolingo-correct.mp3")
-                .then((response) => response.arrayBuffer())
-                .then((arrayBuffer) => audioContext.decodeAudioData(arrayBuffer))
-                .then((audioBuffer) => {
-                    const source = audioContext.createBufferSource();
-                    source.buffer = audioBuffer;
-                    source.connect(audioContext.destination);
-                    source.start();
-                });
-
-            // Set image to happy icon
-            defaultPhoto.src = "/logo/happy.png";
-        
-            // Clear previous content
-            sentenceDisplay.innerHTML = "";
-        
-            // Display sentence with all words in green
-            sentence.split(" ").forEach((word) => {
-                const wordSpan = document.createElement("span");
-                wordSpan.innerHTML = `${word} `;
-                wordSpan.style.color = "green";
-                sentenceDisplay.appendChild(wordSpan);
-            });
-        } else {
-            const audioContext = new AudioContext();
-            // adding audio/duolingo-incorrect.mp3 to audio context using audio API
-            fetch("/audio/duolingo-wrong.mp3")
-                .then((response) => response.arrayBuffer())
-                .then((arrayBuffer) => audioContext.decodeAudioData(arrayBuffer))
-                .then((audioBuffer) => {
-                    const source = audioContext.createBufferSource();
-                    source.buffer = audioBuffer;
-                    source.connect(audioContext.destination);
-                    source.start();
-                });
-
-            // Set image to sad icon
-            defaultPhoto.src = "/logo/sad.png";
-        
-            // Clear previous content
-            sentenceDisplay.innerHTML = "";
-        
-            // Normalize for comparison only (original sentence stays the same for display)
-            const normalizeText = (text) => 
-                text.trim().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "").toLowerCase();
-        
-            const sentenceWords = sentence.split(" ");
-            const normalizedSentenceWords = sentenceWords.map(normalizeText);
-            const resultWords = normalizeText(result).split(" ");
-            const minLength = Math.min(normalizedSentenceWords.length, resultWords.length);
-        
-            // Compare each word up to the minimum length
-            for (let i = 0; i < minLength; i++) {
-                const wordSpan = document.createElement("span");
-                wordSpan.innerHTML = `${sentenceWords[i]} `;  // Use original casing for display
-                
-                // Match styling based on word accuracy using the normalized comparison
-                wordSpan.style.color = (normalizedSentenceWords[i] === resultWords[i]) ? "green" : "red";
-                
-                sentenceDisplay.appendChild(wordSpan);
-            }
-        
-            // Handle remaining words in sentence if any
-            if (sentenceWords.length > minLength) {
-                for (let i = minLength; i < sentenceWords.length; i++) {
-                    const wordSpan = document.createElement("span");
-                    wordSpan.innerHTML = `${sentenceWords[i]} `;
-                    wordSpan.style.color = "red";  // Remaining words in red as they weren't spoken
-                    sentenceDisplay.appendChild(wordSpan);
-                }
-            }
-        }
-    };
 });
+
+// Event listener for record button
+recordButton.addEventListener("click", async () => {
+    try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        
+        if (!audioContext) {
+            initializeAudioVisualization();
+        }
+        
+        const source = audioContext.createMediaStreamSource(stream);
+        source.connect(analyser);
+        
+        drawVisualization();
+        recognition.start();
+        recordButton.disabled = true; // Disable button while recording
+        
+        // Add speech recognition event handlers
+        recognition.onstart = () => {
+            console.log('🎤 Speech recognition started...');
+        };
+
+        recognition.onresult = (event) => {
+            // Stop recording
+            recognition.stop();
+            stream.getTracks().forEach(track => track.stop());
+            cancelAnimationFrame(animationId);
+            recordButton.disabled = false; // Re-enable button
+            
+            const result = event.results[0][0].transcript.toLowerCase();
+            const sentence = sentenceDisplay.textContent;
+            const normalizedSentence = sentence.toLowerCase()
+                .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "")
+                .replace(/\?/g, "")
+                .trim();
+            
+            console.log('🎯 Expected:', normalizedSentence);
+            console.log('🗣️ Recorded:', result);
+            console.log('📊 Confidence:', event.results[0][0].confidence);
+            console.log('Original sentence:', sentence);
+            
+            setStatus(result, normalizedSentence, sentence);
+        };
+
+        recognition.onerror = (event) => {
+            console.error('❌ Speech recognition error:', event.error);
+            cancelAnimationFrame(animationId);
+            stream.getTracks().forEach(track => track.stop());
+            recordButton.disabled = false; // Re-enable button
+        };
+
+        recognition.onend = () => {
+            // Only restart if we haven't completed successfully
+            if (!recognitionComplete) {
+                recordButton.disabled = false; // Re-enable button
+                console.log('🎤 Recognition ended');
+            }
+        };
+        
+    } catch (error) {
+        console.error('Error accessing microphone:', error);
+        alert('Unable to access microphone. Please ensure microphone permissions are granted.');
+        recordButton.disabled = false; // Re-enable button
+    }
+});
+
+// Add resize handler to keep canvas responsive
+window.addEventListener('resize', () => {
+    canvas.width = Math.min(recordButtonParent.offsetWidth * 0.9, 500);
+    canvas.height = 100;
+});
+
+let recognitionComplete = false;
+
+

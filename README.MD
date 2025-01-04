@@ -1,59 +1,44 @@
 # SpeechWise
 
-**SpeechWise** is a language learning assistant designed to help users practice listening, speaking, reading, and writing through interactive exercises. It leverages the Canvas API for visual learning tools, the Speech API for voice recognition and pronunciation practice, and the Audio API for listening exercises.
+A modern language learning web application that helps users improve their pronunciation through real-time speech recognition and interactive feedback.
 
-## Table of Contents
-- [Features](#features)
-- [APIs Used](#apis-used)
-- [Project Structure](#project-structure)
-- [Getting Started](#getting-started)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
+## Core Features
 
-## Features
+### Real-time Speech Recognition
+- Listens to user pronunciation using the Web Speech API
+- Provides immediate feedback on pronunciation accuracy
+- Supports multiple languages (English, French, German, Italian, Portuguese, Romanian)
 
-- **Flashcards with Speech Practice**: Display a word using the Canvas API, and allow users to practice pronunciation using the Speech API.
-- **Listening Comprehension with Drag & Drop**: Play a sentence or word, then allow users to drag and drop translations or missing words into the correct order.
-- **Interactive Sentence Builder**: Users can drag and drop scattered words to form grammatically correct sentences.
-- **Reading Practice with Visual Aids**: Highlight words or sentences in reading passages and provide pronunciation or definitions on hover or click.
-- **Responsive Design**: Built with Bootstrap to ensure compatibility across different devices and screen sizes.
+### Visual Audio Feedback
+- Real-time audio visualization using Canvas API
+- Dynamic waveform display while speaking
+- Visual feedback helps users understand their voice patterns
 
-## APIs Used
+### Interactive Learning Flow
+1. Select your target language
+2. Choose difficulty level (Beginner, Intermediate, Advanced)
+3. Practice pronunciation with provided sentences
+4. Receive instant visual and audio feedback
+5. Track progress through correct/incorrect indicators
 
-### 1. **Speech API**:
-   - Voice input and recognition for pronunciation practice and feedback.
+## Technical Implementation
 
-### 2. **Audio API** (Complementary to Speech API):
-   - Used for listening exercises, including playback of words or sentences for pronunciation checks and listening comprehension.
+### APIs Used
+1. **Canvas API**
+   - Renders real-time audio visualization
+   - Creates dynamic waveform display
+   - Provides visual feedback during speech
 
-### 3. **Drag & Drop API**:
-   - Adds interactive elements for users to drag words or translations into place to complete exercises.
+2. **Web Speech API**
+   - Handles speech recognition
+   - Processes user pronunciation
+   - Compares spoken text with target sentences
 
-## Project Structure
+3. **Audio API**
+   - Manages audio feedback sounds
+   - Processes microphone input
+   - Controls audio visualization data
 
-### HTML
-- The UI is built with **Bootstrap** for responsive design, with sections dedicated to speaking, listening, reading, and writing exercises.
+### Key Components
 
-### CSS
-- Customized Bootstrap styles ensure a clean and user-friendly design, using light colors and large interactive buttons for easy navigation.
-
-### JavaScript
-- The JavaScript logic is contained within a single `.js` file, which includes:
-  - Speech recognition using the Web Speech API.
-  - Audio feedback and playback using the Audio API.
-  - Drag-and-drop functionality for exercises involving word arrangement.
-
-## Suggested Features
-
-### Flashcards with Speech Practice:
-- Words are displayed using the Canvas API, and users practice saying them aloud. The Speech API listens and compares pronunciation to provide feedback.
-
-### Listening Comprehension with Drag & Drop:
-- Users listen to words or sentences played via the Audio API, then drag and drop translations or missing words using the Canvas and Drag & Drop APIs.
-
-### Interactive Sentence Builder:
-- Words are scattered across the canvas, and users arrange them into a grammatically correct sentence by dragging and dropping.
-
-### Reading Practice with Visual Aids:
-- Users read passages, and hovering over words or sentences provides pronunciation or definitions, utilizing the Canvas API for visual representation.
+#### Speech Recognition System
