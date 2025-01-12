@@ -1,29 +1,29 @@
-//Sentences in different languages for the language learning app
+
 const sentences = {
     romanian: {
         beginner: [
             "Bună ziua!",
             "Eu sunt un student.",
             "Unde este biblioteca?",
-            "Astăzi este o zi frumoasă.", // "Today is a beautiful day."
-            "Îmi place să citesc.", // "I like to read."
-            "Unde locuiești?", // "Where do you live?"
+            "Astăzi este o zi frumoasă.", 
+            "Îmi place să citesc.", 
+            "Unde locuiești?", 
         ],
         intermediate: [
             "Călătoria mea va începe mâine.",
             "Cărțile din bibliotecă sunt vechi.",
             "Îmi place să citesc în fiecare seară.",
-            "M-am mutat într-un oraș nou luna trecută.", // "I moved to a new city last month."
-            "Vreau să învăț ceva nou în fiecare zi.", // "I want to learn something new every day."
-            "Sper să te întâlnesc curând.", // "I hope to meet you soon."
+            "M-am mutat într-un oraș nou luna trecută.", 
+            "Vreau să învăț ceva nou în fiecare zi.", 
+            "Sper să te întâlnesc curând.", 
         ],
         advanced: [
             "În ciuda dificultăților, a reușit să finalizeze proiectul la timp.",
             "Esența filosofiei constă în căutarea adevărului.",
             "În final, toate eforturile noastre au fost răsplătite.",
-            "Este important să iei decizii informate.", // "It is important to make informed decisions."
-            "A învăța o limbă nouă necesită răbdare și perseverență.", // "Learning a new language requires patience and perseverance."
-            "Cunoașterea este o resursă prețioasă pe care nimeni nu ți-o poate lua.", // "Knowledge is a valuable resource that no one can take away."
+            "Este important să iei decizii informate.", 
+            "A învăța o limbă nouă necesită răbdare și perseverență.", 
+            "Cunoașterea este o resursă prețioasă pe care nimeni nu ți-o poate lua.", 
         ]
     },
     english: {
@@ -243,17 +243,17 @@ function drawVisualization() {
     let x = canvas.width * 0.05; // Start from 5% of canvas width
     
     for(let i = 0; i < dataArray.length; i++) {
-        // Make bars taller and more responsive
+    
         const barHeight = (dataArray[i] / 255) * canvas.height * 0.8;
         
         // Create gradient
         const gradient = ctx.createLinearGradient(0, canvas.height, 0, canvas.height - barHeight);
-        gradient.addColorStop(0, '#ff4b1f');  // Brighter orange-red
-        gradient.addColorStop(1, '#ff9068');  // Lighter orange
+        gradient.addColorStop(0, '#ff4b1f');  
+        gradient.addColorStop(1, '#ff9068');  
         
         ctx.fillStyle = gradient;
         
-        // Round the top of bars
+    
         ctx.beginPath();
         ctx.roundRect(x, canvas.height - barHeight, barWidth, barHeight, 5);
         ctx.fill();
@@ -262,13 +262,12 @@ function drawVisualization() {
     }
 }
 
-// Add these at the top with other constants
 const correctSound = new Audio('/audio/duolingo-correct.mp3');
 const wrongSound = new Audio('/audio/duolingo-wrong.mp3');
 
 async function setStatus(result, normalizedSentence, sentence) {
     try {
-        // Simple string comparison after normalization
+
         if (result === normalizedSentence) {
             console.log('✅ Correct pronunciation!');
             
@@ -294,7 +293,7 @@ async function setStatus(result, normalizedSentence, sentence) {
         } else {
             console.log('❌ Incorrect pronunciation');
             
-            // Play error sound
+        
             try {
                 await wrongSound.play();
             } catch (error) {
@@ -318,7 +317,7 @@ async function setStatus(result, normalizedSentence, sentence) {
     }
 }
 
-// Display sentence with color coding
+
 function displaySentence(sentence, isCorrect, result = "") {
     sentenceDisplay.innerHTML = "";
     const sentenceWords = sentence.split(" ");
