@@ -429,7 +429,6 @@ recordButton.addEventListener("click", async () => {
         };
 
         recognition.onend = () => {
-            // Only restart if we haven't completed successfully
             if (!recognitionComplete) {
                 recordButton.disabled = false; // Re-enable button
                 console.log('🎤 Recognition ended');
